@@ -2,8 +2,7 @@
 Small tool to quickly scrape ebay listings based on a search query and optionally retrieve all images associated with each listing. Outputs to a JSON file.
 
  ## Todo:
- 
-    * Implement PyCurl for optional image downloading
+
     * Implement optional functionality for scraping completed ebay listings
 
 ## Required Packages:
@@ -31,13 +30,16 @@ Small tool to quickly scrape ebay listings based on a search query and optionall
     
     # Perform a search through 5 pages of results and retrieve all associated listing images
     $ ./scrape.py --search "product to search" --pages 5 --images true
+
+    # Perform a search, retrieve all associated listing images, and then download images to a custom folder
+    $ ./scrape.py --search "product to search" --images true --download true --folder "my custom folder"
     
 ## Help output:
 
-    usage: scrape.py [-h] [--search SEARCH_QUERY] [--write FILE_NAME] [--pages PAGE_COUNT] [--images GET_IMAGES]
+    usage: scrape.py [-h] [--search SEARCH_QUERY] [--write FILE_NAME] [--pages PAGE_COUNT] [--images GET_IMAGES] [--download DOWNLOAD_IMAGES] [--folder FOLDER_NAME]
 
     ** Ebay listing scraper and image retrieval **
-
+    
     options:
       -h, --help            show this help message and exit
       --search SEARCH_QUERY
@@ -45,4 +47,7 @@ Small tool to quickly scrape ebay listings based on a search query and optionall
       --write FILE_NAME     Filename prefix (search query is automatically appended to the filename)
       --pages PAGE_COUNT    Number of page results to scrape (default: 1)
       --images GET_IMAGES   Whether or not to retrieve image links (default: False)
+      --download DOWNLOAD_IMAGES
+                            Whether or not to download gathered images - Note: this only works if you opt to retrieve image links (default: False)
+      --folder FOLDER_NAME  Custom folder name for downloaded images (default: scraped-images)
 

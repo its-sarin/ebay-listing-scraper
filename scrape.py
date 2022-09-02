@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
-import requests
-from bs4 import BeautifulSoup
+import os
 import json
 import argparse
+import requests
+from bs4 import BeautifulSoup
 from progress.bar import Bar
 
 parser = argparse.ArgumentParser(description='** Ebay listing scraper and image retrieval **')
@@ -14,15 +15,20 @@ parser.add_argument('--write', dest='file_name', type=str,
 parser.add_argument('--pages', dest='page_count', type=int, help='Number of page results to scrape (default: 1)')
 parser.add_argument('--images', dest='get_images', type=bool,
                     help='Whether or not to retrieve image links (default: False)')
+parser.add_argument('--download', dest='download_images', type=bool,
+                    help='Whether or not to download gathered images - Note: this only works if you opt to retrieve image links (default: False)')
+parser.add_argument('--folder', dest='folder_name', type=str, help='Custom folder name for downloaded images (default: scraped-images)')
 
 args = parser.parse_args()
 
 SHOULD_GET_IMAGE_LINKS = args.get_images or False
-SHOULD_DL_IMAGES = False  # to do
+SHOULD_DL_IMAGES = True if args.get_images and args.download_images else False
 SEARCH_QUERY = args.search_query.replace(' ', '+') if args.search_query is not None else ''
 NUM_PAGES = args.page_count or 1
 FILE_NAME = args.file_name or 'ebay-scraped-results'
 FILE_NAME = FILE_NAME.replace(' ', '-') + '--' + SEARCH_QUERY.replace('+', '-') + '.json'
+FOLDER_NAME = args.folder_name.replace(' ', '-') or 'scraped-images'
+
 
 item_names = []
 item_links = []
@@ -65,6 +71,8 @@ def retrieve_listings():
                                     'url': link
                                 }
 
+            bar.finish()
+
     if SHOULD_GET_IMAGE_LINKS:
         retrieve_image_links()
     else:
@@ -101,13 +109,37 @@ def retrieve_image_links():
                     'image_urls': item_image_links
                 })
 
+        bar.finish()
+
     write_to_file()
+
+    if SHOULD_DL_IMAGES:
+        download_images()
+
+
+def download_images():
+    if not os.path.exists(FOLDER_NAME):
+        os.mkdir(FOLDER_NAME)
+
+    print('** Downloading Images **')
+
+    with Bar('Downloading Images  ', max=len(item_image_links)) as bar:
+        for image_link in item_image_links:
+            bar.next()
+            response = requests.get(image_link)
+            image_id = image_link.split('/')
+            destination = FOLDER_NAME + '/' + SEARCH_QUERY.replace('+', '-') + '--' + image_id[5] + '.jpg'
+
+            with open(destination, 'wb') as fh:
+                fh.write(response.content)
+
+        bar.finish()
 
 
 def write_to_file():
     with open(FILE_NAME, 'w') as file:
         file.write(json.dumps(output, indent=4))
-        print("File created at: " + FILE_NAME)
+        print("File created at: " + FILE_NAME + '\n')
 
 
 if __name__ == '__main__':
