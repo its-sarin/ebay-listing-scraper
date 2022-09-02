@@ -27,7 +27,7 @@ SEARCH_QUERY = args.search_query.replace(' ', '+') if args.search_query is not N
 NUM_PAGES = args.page_count or 1
 FILE_NAME = args.file_name or 'ebay-scraped-results'
 FILE_NAME = FILE_NAME.replace(' ', '-') + '--' + SEARCH_QUERY.replace('+', '-') + '.json'
-FOLDER_NAME = args.folder_name.replace(' ', '-') or 'scraped-images'
+FOLDER_NAME = args.folder_name.replace(' ', '-') if args.folder_name else 'scraped-images'
 
 
 item_names = []
