@@ -5,6 +5,7 @@ Small tool to quickly scrape ebay listings based on a search query and optionall
  
     * Implement PyCurl for optional image downloading
     * Clean up image links results to remove unwanted inclusions
+    * Implement optional functionality for scraping completed ebay listings
 
 ## Required Packages:
 
