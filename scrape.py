@@ -19,7 +19,7 @@ SHOULD_DL_IMAGES = False  # to do
 SEARCH_QUERY = args.search_query.replace(' ', '+') if args.search_query is not None else ''
 NUM_PAGES = args.page_count or 1
 FILE_NAME = args.file_name or 'ebay-scraped-results'
-FILE_NAME = FILE_NAME + '--' + SEARCH_QUERY.replace('+', '-') + '.json'
+FILE_NAME = FILE_NAME.replace(' ', '-') + '--' + SEARCH_QUERY.replace('+', '-') + '.json'
 
 item_names = []
 item_links = []

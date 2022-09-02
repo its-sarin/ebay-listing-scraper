@@ -24,8 +24,9 @@ Small tool to quickly scrape ebay listings based on a search query and optionall
 
 ## Optional Usage:
 
-    # Perform a search through 5 pages of results and write the output with the prefix "my-output-file"
-    $ ./scrape.py --search "product to search" --pages 5 --write "my-output-file"
+    # Perform a search through 5 pages of results and write the output with the prefix "my output file"
+    # (file name in this example would end up as: 'my-output-file--product-to-search.json'
+    $ ./scrape.py --search "product to search" --pages 5 --write "my output file"
     
     # Perform a search through 5 pages of results and retrieve all associated listing images
     $ ./scrape.py --search "product to search" --pages 5 --images true
