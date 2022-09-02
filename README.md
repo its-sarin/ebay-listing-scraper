@@ -4,8 +4,10 @@ Small tool to quickly scrape ebay listings based on a search query and optionall
  ## Todo:
  
     * Implement PyCurl for optional image downloading
+    * Clean up image links results to remove unwanted inclusions
 
 ## Required Packages:
+
 [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/)
 
 [requests](https://github.com/psf/requests)
@@ -23,6 +25,9 @@ Small tool to quickly scrape ebay listings based on a search query and optionall
 
     # Perform a search through 5 pages of results and write the output with the prefix "my-output-file"
     $ ./scrape.py --search "product to search" --pages 5 --write "my-output-file"
+    
+    # Perform a search through 5 pages of results and retrieve all associated listing images
+    $ ./scrape.py --search "product to search" --pages 5 --images true
     
 ## Help output:
 
