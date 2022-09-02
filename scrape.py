@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 
 import requests
 from bs4 import BeautifulSoup
@@ -8,7 +8,7 @@ import argparse
 parser = argparse.ArgumentParser(description='** Ebay listing scraper and image retrieval **')
 
 parser.add_argument('--search', dest='search_query', type=str, help='Term to search for on ebay')
-parser.add_argument('--write', dest='file_name', type=str, help='Filename prefix (search query is automatically appended to the filename')
+parser.add_argument('--write', dest='file_name', type=str, help='Filename prefix (search query is automatically appended to the filename)')
 parser.add_argument('--pages', dest='page_count', type=int, help='Number of page results to scrape (default: 1)')
 parser.add_argument('--images', dest='get_images', type=bool, help='Whether or not to retrieve image links (default: False)')
 
